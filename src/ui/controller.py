@@ -1,11 +1,14 @@
+from typing import Optional
 from . import screen
 from . import splash
 
 
-now = splash.Splash()
+now: Optional[screen.Screen] = None
 
 
-def init():
+def init(root):
+    global now
+    now = splash.Splash(root)
     now.show()
 
 def change_screen(new: screen.Screen):

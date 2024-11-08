@@ -10,6 +10,6 @@ main_window.title("사과해요나한테")
 main_window.resizable(False, False)
 main_window.config(background=theme.color_background)
 theme.init()
-controller.init()
+controller.init(main_window)
 
 main_window.mainloop()
