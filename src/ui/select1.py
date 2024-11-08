@@ -16,17 +16,18 @@ class Select1(screen.Screen):
         )
         self.buttons = []
         for title, make_screen in controller.dataset.items():
-            button = tkinter.Button(
-                root,
-                text = title,
-                padx=40, pady=20,
-                background=theme.color_background,
-                fg=theme.color_on_background,
-                borderwidth=1,
-                font=theme.font(size=40),
-                command=lambda : controller.change_screen(make_screen(root))
+            self.buttons.append(
+                tkinter.Button(
+                    root,
+                    text = title,
+                    padx=40, pady=20,
+                    background=theme.color_background,
+                    fg=theme.color_on_background,
+                    borderwidth=1,
+                    font=theme.font(size=40),
+                    command=lambda fun=make_screen: controller.change_screen(fun(root))
+                )
             )
-            self.buttons.append(button)
 
     def show(self):
         self.appbar.place(x=0, y=0, width=720, height=120)
