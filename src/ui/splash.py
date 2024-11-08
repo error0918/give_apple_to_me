@@ -6,14 +6,6 @@ from . import select1
 
 
 class Splash(screen.Screen):
-    root = None
-    title = None
-    start_button = None
-    description = None
-    deco1 = None
-    deco2 = None
-
-
     def __init__(self, root):
         self.root = root
         self.title = tkinter.Label(

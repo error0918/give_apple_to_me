@@ -5,10 +5,6 @@ from . import theme
 
 
 class Select1(screen.Screen):
-    root = None
-    appbar = None
-    buttons = []
-
     def __init__(self, root):
         self.root = root
         self.appbar = tkinter.Label(
@@ -18,6 +14,7 @@ class Select1(screen.Screen):
             fg=theme.color_on_content,
             font=theme.font(size=50, bold=True)
         )
+        self.buttons = []
         for title, make_screen in controller.dataset.items():
             button = tkinter.Button(
                 root,

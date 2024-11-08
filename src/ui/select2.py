@@ -4,8 +4,6 @@ from . import theme
 
 
 class Select2a(screen.Screen):
-    root = None
-
     def __init__(self, root):
         self.root = root
 
@@ -17,8 +15,6 @@ class Select2a(screen.Screen):
 
 
 class Select2b(screen.Screen):
-    root = None
-
     def __init__(self, root):
         self.root = root
 
@@ -30,8 +26,6 @@ class Select2b(screen.Screen):
 
 
 class Select2c(screen.Screen):
-    root = None
-
     def __init__(self, root):
         self.root = root
 
@@ -43,8 +37,6 @@ class Select2c(screen.Screen):
 
 
 class Select2d(screen.Screen):
-    root = None
-
     def __init__(self, root):
         self.root = root
 
