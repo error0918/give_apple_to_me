@@ -1,7 +1,15 @@
 from typing import Optional
 from . import screen
+from . import select2
 from . import splash
 
+
+dataset = {
+    "가전": lambda root: select2.Select2a(root),
+    "음식물": lambda root: select2.Select2b(root),
+    "생활 쓰레기": lambda root: select2.Select2c(root),
+    "기타": lambda root: select2.Select2d(root)
+}
 
 now: Optional[screen.Screen] = None
 

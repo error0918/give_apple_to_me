@@ -3,7 +3,46 @@ from . import screen
 from . import theme
 
 
-class Select2(screen.Screen):
+class Select2a(screen.Screen):
+    root = None
+
+    def __init__(self, root):
+        self.root = root
+
+    def show(self):
+        pass
+
+    def hide(self):
+        pass
+
+
+class Select2b(screen.Screen):
+    root = None
+
+    def __init__(self, root):
+        self.root = root
+
+    def show(self):
+        pass
+
+    def hide(self):
+        pass
+
+
+class Select2c(screen.Screen):
+    root = None
+
+    def __init__(self, root):
+        self.root = root
+
+    def show(self):
+        pass
+
+    def hide(self):
+        pass
+
+
+class Select2d(screen.Screen):
     root = None
 
     def __init__(self, root):
