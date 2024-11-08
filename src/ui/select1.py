@@ -2,17 +2,16 @@ import tkinter
 from . import controller
 from . import screen
 from . import theme
+from . import widget
 
 
 class Select1(screen.Screen):
     def __init__(self, root):
         self.root = root
-        self.appbar = tkinter.Label(
-            root,
-            text = "대분류 선택",
-            background=theme.color_primary,
-            fg=theme.color_on_content,
-            font=theme.font(size=50, bold=True)
+        self.appbar =  widget.AppBar(
+            root=root,
+            title="대분류 선택",
+            action=lambda : controller.init(root)
         )
         self.buttons = []
         for title, make_screen in controller.dataset.items():
@@ -30,7 +29,7 @@ class Select1(screen.Screen):
             )
 
     def show(self):
-        self.appbar.place(x=0, y=0, width=720, height=120)
+        self.appbar.place()
         for i in range(0, len(self.buttons)):
             self.buttons[i].place(
                 x=40, y=120+40+(120+40)*i,

@@ -16,6 +16,8 @@ now: Optional[screen.Screen] = None
 
 def init(root):
     global now
+    if now is not None:
+        now.hide()
     now = splash.Splash(root)
     now.show()
 

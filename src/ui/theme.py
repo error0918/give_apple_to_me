@@ -11,6 +11,9 @@ def init():
 color_background = "#FFFFFF"
 color_on_background = "#000000"
 
+color_toast = "#444444"
+color_on_toast = "#FFFFFF"
+
 color_primary = "#4BC687"
 color_secondary = "#62CC93"
 color_on_content = "#FFFFFF"
