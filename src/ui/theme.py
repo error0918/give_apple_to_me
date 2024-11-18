@@ -10,8 +10,9 @@ color_toast = "#444444"
 color_on_toast = "#FFFFFF"
 
 color_primary = "#4BC687"
-color_secondary = "#62CC93"
+color_secondary = "#79CBA0"
 color_on_content = "#FFFFFF"
+color_hint = "#DDDDDD"
 
 color_container = "#19814B"
 color_on_container = "#FFFFFF"

@@ -41,6 +41,7 @@ class Select2(screen.Screen): # 가전
             )
 
         self.total_height = 120 * len(self.filtered_items) + 40 * (len(self.filtered_items) + 1)
+
         self.scroll_frame.configure(height=self.total_height, width=720-30)
         if platform.system() == "Windows":  # Windows 일 때
             self.scroll_frame.bind_all(
@@ -90,6 +91,5 @@ class Select2(screen.Screen): # 가전
         self.appbar.place_forget()
         self.scroll_canvas.place_forget()
         self.scroll_bar.place_forget()
-
         for button in self.buttons:
             button.place_forget()
