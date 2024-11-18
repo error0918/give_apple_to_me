@@ -2,6 +2,8 @@ import threading
 import tkinter
 import time
 from . import theme
+from . import controller
+from . import splash
 
 
 class AppBar:
@@ -35,6 +37,25 @@ class AppBar:
         self.appbar.place_forget()
         if self.action is not None:
             self.appbar_button.place_forget()
+
+
+class RestartBar:
+    def __init__(self, root):
+        self.root = root
+        self.appbar = tkinter.Label(
+            root,
+            text = "처음으로",
+            background=theme.color_container,
+            fg=theme.color_on_container,
+            font=theme.font(size=40)
+        )
+        self.appbar.bind("<Button-1>", lambda event: controller.change_screen(splash.Splash(root)))
+
+    def place(self):
+        self.appbar.place(x=0, y=1080-120, width=720, height=120)
+
+    def place_forget(self):
+        self.appbar.place_forget()
 
 
 def toast(root, text: str, milli: int=1000):

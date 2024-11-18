@@ -1,8 +1,10 @@
 import tkinter
 from . import controller
+from . import navigator
 from . import screen
 from . import theme
 from . import widget
+from . import select2
 
 
 class Select1(screen.Screen):
@@ -14,17 +16,17 @@ class Select1(screen.Screen):
             action=lambda : controller.init(root)
         )
         self.buttons = []
-        for title, make_screen in controller.dataset.items():
+        for division in navigator.Division:
             self.buttons.append(
                 tkinter.Button(
                     root,
-                    text = title,
+                    text = division.value,
                     padx=40, pady=20,
                     background=theme.color_background,
                     fg=theme.color_on_background,
                     borderwidth=1,
                     font=theme.font(size=40),
-                    command=lambda fun=make_screen: controller.change_screen(fun(root))
+                    command=lambda root_=self.root, division_=division: controller.change_screen(select2.Select2(root=root_, division=division_))
                 )
             )
 
