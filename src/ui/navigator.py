@@ -1,6 +1,6 @@
 from . import controller
-from .subpage import end_screen
-from .subpage import gompangi_screen
+from .last_screen import end_screen
+from .last_screen import gompangi_screen
 from dataclasses import dataclass
 from enum import Enum
 

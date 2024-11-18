@@ -42,20 +42,20 @@ class AppBar:
 class RestartBar:
     def __init__(self, root):
         self.root = root
-        self.appbar = tkinter.Label(
+        self.restart_bar = tkinter.Label(
             root,
             text = "처음으로",
             background=theme.color_container,
             fg=theme.color_on_container,
             font=theme.font(size=40)
         )
-        self.appbar.bind("<Button-1>", lambda event: controller.change_screen(splash.Splash(root)))
+        self.restart_bar.bind("<Button-1>", lambda event: controller.change_screen(splash.Splash(root)))
 
     def place(self):
-        self.appbar.place(x=0, y=1080-120, width=720, height=120)
+        self.restart_bar.place(x=0, y=1080-120, width=720, height=120)
 
     def place_forget(self):
-        self.appbar.place_forget()
+        self.restart_bar.place_forget()
 
 
 def toast(root, text: str, milli: int=1000):
