@@ -3,6 +3,7 @@ from .last_screen import end_screen
 from .last_screen import gompangi_screen
 from dataclasses import dataclass
 from enum import Enum
+from typing import Union
 
 
 # 쓰레기 대분류
@@ -11,6 +12,16 @@ class Division(Enum):
     FOOD = "음식물"
     LIVING = "생활 쓰레기"
     ETC = "기타"
+
+
+# 쓰레기 소분류
+class SubDivision(Enum):
+    # 소분류 = (소분류 이름, 소속 대분류)
+    ROOT_VEGETABLES = ("뿌리채소", Division.FOOD)
+    WHOLE_VEGETABLES = ("통채소", Division.FOOD)
+    NUCLEAR_FRUIT = ("핵과류", Division.FOOD)
+    FRUITS = ("과일", Division.FOOD)
+    CRUSTACEANS = ("갑각류", Division.FOOD)
 
 
 # 연결 페이지
@@ -27,14 +38,6 @@ class GoPage(Enum):
     SMALL_APPLIANCE = lambda root, name: nav_small_appliance(root=root, name=name)  # 소형 폐가전
     BIG_APPLIANCE = lambda root, name: nav_big_appliance(root=root, name=name)  # 대형 폐가전
     GOMPANGI = lambda root, name: nav_gompangi(root=root, name=name)  # 곰팡이가 피었나요?
-
-
-@dataclass(frozen=True)
-class TrashItem:
-    name: str  # 쓰레기 이름
-    search_keywords: list[str]  # 검색 키워드
-    divisions: list[Division]  # 대분류
-    go_page: GoPage  # 연결 페이지
 
 
 # 일반 쓰레기
@@ -138,6 +141,14 @@ def nav_big_appliance(root, name: str):
 # 곰팡이가 피었나요?
 def nav_gompangi(root, name: str):
     controller.change_screen(gompangi_screen.GompangiScreen(root, name))
+
+
+@dataclass(frozen=True)
+class TrashItem:
+    name: str  # 쓰레기 이름
+    search_keywords: list[str]  # 검색 키워드
+    divisions: list[Union[Division, SubDivision]]  # 대분류
+    go_page: GoPage  # 연결 페이지
 
 
 dataset = [

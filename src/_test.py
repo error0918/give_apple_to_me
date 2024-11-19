@@ -10,7 +10,6 @@ from ui import widget
 from ui.last_screen import end_screen
 
 
-print(platform.system())
 
 
 class TestScreen(screen.Screen): # 가전

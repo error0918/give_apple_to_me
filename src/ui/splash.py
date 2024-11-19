@@ -15,16 +15,16 @@ class Splash(screen.Screen):
             fg=theme.color_on_content,
             font=theme.font(size=80, bold=True)
         )
-        self.start_button = tkinter.Button(
+        self.start_button = tkinter.Label(
             root,
             text = "시작하기",
-            padx=40, pady=20,
-            background=theme.color_background,
-            fg=theme.color_on_background,
-            borderwidth=1,
+            background=theme.color_button,
+            foreground=theme.color_on_button,
             font=theme.font(size=40),
-            command=lambda : controller.change_screen(select1.Select1(root))
+            relief="solid",
+            borderwidth=2
         )
+        self.start_button.bind("<Button-1>", lambda event: controller.change_screen(select1.Select1(root)))
         self.description = tkinter.Label(
             root,
             text = "사과해요나한테, 성균관대학교, 2024",
