@@ -16,8 +16,10 @@ color_hint = "#DDDDDD"
 
 color_container = "#19814B"
 color_on_container = "#FFFFFF"
-color_button = "#EEEEEE"
-color_on_button = "#000000"
+color_button1 = "#EEEEEE"
+color_on_button1 = "#000000"
+color_button2 = "#FFFFFF"
+color_on_button2 = "#000000"
 
 
 # 폰트

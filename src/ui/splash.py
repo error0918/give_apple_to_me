@@ -18,8 +18,8 @@ class Splash(screen.Screen):
         self.start_button = tkinter.Label(
             root,
             text = "시작하기",
-            background=theme.color_button,
-            foreground=theme.color_on_button,
+            background=theme.color_button1,
+            foreground=theme.color_on_button1,
             font=theme.font(size=40),
             relief="solid",
             borderwidth=2

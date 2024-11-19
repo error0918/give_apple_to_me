@@ -6,6 +6,55 @@ from . import controller
 from . import splash
 
 
+class MyButton:
+    def __init__(
+            self,
+            root,
+            on_click,
+            text: str,
+            subtext: str=None,
+            background: str=theme.color_button1,
+            foreground: str=theme.color_on_button1
+    ):
+        self.frame = tkinter.Frame(
+            root,
+            cursor="hand2",
+            background=background,
+            relief="solid",
+            borderwidth=2
+        )
+        self.text_label = tkinter.Label(
+            self.frame,
+            text=text,
+            cursor="hand2",
+            background=background,
+            foreground=foreground,
+            font=theme.font(size=40)
+        )
+        self.subtext_label = tkinter.Label(
+            self.frame,
+            text=subtext,
+            cursor="hand2",
+            background=background,
+            foreground=foreground,
+            font=theme.font(size=20)
+        )
+        self.frame.bind("<Button-1>", lambda event, fun=on_click: fun())
+        for widget in self.frame.winfo_children():
+            widget.bind("<Button-1>", lambda event, fun=on_click: fun())
+
+    def place(self, x: int, y: int, width: int, height: int):
+        self.text_label.place(x=0, y=0, width=width-4, height=height-4)
+        self.subtext_label.place(x=width-10-4, y=10, anchor="ne")
+        self.frame.place(
+            x=x, y=y,
+            width=width, height=height
+        )
+
+    def place_forget(self):
+        self.frame.place_forget()
+
+
 class AppBar:
     def __init__(self, root, title, action=None):
         self.root = root
@@ -26,7 +75,8 @@ class AppBar:
                 fg=theme.color_on_content,
                 font=theme.font(size=60, bold=True)
             ) # 투명하게 하기 위해 가짜 버튼
-            self.appbar_button.bind("<Button-1>", lambda event: action())
+            asdf = action
+            self.appbar_button.bind("<Button-1>", lambda event, fun=asdf: asdf())
 
     def place(self):
         self.appbar.place(x=0, y=0, width=720, height=120)
@@ -45,6 +95,7 @@ class RestartBar:
         self.restart_bar = tkinter.Label(
             root,
             text = "처음으로",
+            cursor="hand2",
             background=theme.color_container,
             fg=theme.color_on_container,
             font=theme.font(size=40)

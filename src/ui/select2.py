@@ -27,17 +27,15 @@ class Select2(screen.Screen): # 가전
         self.filtered_items = list(sorted(filter(lambda x: division in x.divisions, navigator.dataset), key=lambda x: x.name))
         self.buttons = []
         for item in self.filtered_items:
-            button = tkinter.Label(
-                self.scroll_frame,
-                text = item.name,
-                background=theme.color_button,
-                foreground=theme.color_on_button,
-                font=theme.font(size=40),
-                relief="solid",
-                borderwidth=2
+            self.buttons.append(
+                widget.MyButton(
+                    self.scroll_frame,
+                    text = item.name,
+                    background=theme.color_button2,
+                    foreground=theme.color_on_button2,
+                    on_click=lambda function=item.go_page, name=item.name: function(self.root, name)
+                )
             )
-            button.bind("<Button-1>", lambda event, function=item.go_page, name=item.name: function(self.root, name))
-            self.buttons.append(button)
 
         self.total_height = 120 * len(self.filtered_items) + 40 * (len(self.filtered_items) + 1)
 

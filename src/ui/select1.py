@@ -32,6 +32,7 @@ class Select1(screen.Screen):
         self.search_hint = tkinter.Label(
             self.search_bar,
             text="검색할 키워드를 입력하세요..",
+            cursor="hand2",
             background=theme.color_secondary,
             foreground=theme.color_hint,
             font=theme.font(size=30, italic=True),
@@ -48,7 +49,7 @@ class Select1(screen.Screen):
         self.search_clear.bind("<Button-1>", lambda event: self.search_entry.delete(0, tkinter.END))
 
         self.search_variable.trace("w", self.on_text_changed)
-        def show_hint(event):
+        def show_hint(__event):
             if self.search_entry.get().strip() == "":
                 self.search_hint.place(
                     x=40, y=20,
@@ -67,18 +68,16 @@ class Select1(screen.Screen):
 
         self.buttons = []
         for division in navigator.Division:
-            button = tkinter.Label(
-                self.scroll_frame,
-                text = division.value,
-                background=theme.color_button,
-                foreground=theme.color_on_button,
-                font=theme.font(size=40),
-                relief="solid",
-                borderwidth=2
+            self.buttons.append(
+                widget.MyButton(
+                    self.scroll_frame,
+                    text=division.value,
+                    subtext="대분류",
+                    background=theme.color_button1,
+                    foreground=theme.color_on_button1,
+                    on_click=lambda root_=self.root, division_=division: controller.change_screen(select2.Select2(root=root_, division=division_))
+                )
             )
-            button.bind("<Button-1>", lambda event, root_=self.root, division_=division: controller.change_screen(select2.Select2(root=root_, division=division_)))
-            self.buttons.append(button)
-
         self.total_height = 120 * len(navigator.Division) + 40 * (len(navigator.Division) + 1)
 
         self.scroll_frame.configure(height=self.total_height, width=720-30)
@@ -108,17 +107,16 @@ class Select1(screen.Screen):
             self.hide_buttons()
             self.buttons = []
             for division in navigator.Division:
-                button = tkinter.Label(
-                    self.scroll_frame,
-                    text = division.value,
-                    background=theme.color_button,
-                    foreground=theme.color_on_button,
-                    font=theme.font(size=40),
-                    relief="solid",
-                    borderwidth=2
+                self.buttons.append(
+                    widget.MyButton(
+                        self.scroll_frame,
+                        text=division.value,
+                        subtext="대분류",
+                        background=theme.color_button1,
+                        foreground=theme.color_on_button1,
+                        on_click=lambda root_=self.root, division_=division: controller.change_screen(select2.Select2(root=root_, division=division_))
+                    )
                 )
-                button.bind("<Button-1>", lambda event, root_=self.root, division_=division: controller.change_screen(select2.Select2(root=root_, division=division_)))
-                self.buttons.append(button)
 
             self.total_height = 120 * len(navigator.Division) + 40 * (len(navigator.Division) + 1)
             self.scroll_frame.configure(height=self.total_height, width=720-30)
@@ -139,17 +137,15 @@ class Select1(screen.Screen):
             filtered_items = list(sorted(filter(lambda x: value in x.search_keywords, navigator.dataset), key=lambda x: x.name))
             self.buttons = []
             for item in filtered_items:
-                button = tkinter.Label(
-                    self.scroll_frame,
-                    text = item.name,
-                    background=theme.color_button,
-                    foreground=theme.color_on_button,
-                    font=theme.font(size=40),
-                    relief="solid",
-                    borderwidth=2
+                self.buttons.append(
+                    widget.MyButton(
+                        self.scroll_frame,
+                        text = item.name,
+                        background=theme.color_button2,
+                        foreground=theme.color_on_button2,
+                        on_click=lambda function=item.go_page, name=item.name: function(self.root, name)
+                    )
                 )
-                button.bind("<Button-1>", lambda event, function=item.go_page, name=item.name: function(self.root, name))
-                self.buttons.append(button)
 
             self.total_height = 120 * len(filtered_items) + 40 * (len(filtered_items) + 1)
             self.scroll_frame.configure(height=self.total_height, width=720-30)
