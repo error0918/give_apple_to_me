@@ -1,11 +1,7 @@
 import tkinter
 import platform
-from . import controller
-from . import navigator
-from . import screen
-from . import theme
-from . import widget
-from . import select2
+from util import theme, screen, controller, navigator
+from . import widget, select2
 
 
 class Select1(screen.Screen):

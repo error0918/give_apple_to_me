@@ -1,8 +1,6 @@
 import tkinter
 import pyglet
-from ui import theme
-from ui import controller
-
+from util import theme, controller
 
 main_window = tkinter.Tk()
 

@@ -1,7 +1,6 @@
 import tkinter
-from ui import screen
 from ui import widget
-from ui import theme
+from util import theme, screen
 
 
 class EndScreen(screen.Screen): # 생활 쓰레기

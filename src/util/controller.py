@@ -1,6 +1,6 @@
 from typing import Optional
-from . import screen
-from . import splash
+from ui import splash
+from util import screen
 
 
 now: Optional[screen.Screen] = None

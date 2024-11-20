@@ -1,8 +1,6 @@
 import tkinter
-from . import controller
-from . import screen
-from . import theme
 from . import select1
+from util import theme, screen, controller
 
 
 class Splash(screen.Screen):

@@ -1,14 +1,3 @@
-import tkinter
-import pyglet
-import platform
-from enum import Enum
-from dataclasses import dataclass
-from ui import widget
-from ui.last_screen import end_screen
-from util import theme, screen, controller
-
-
-"""
 # 한글 문자 분해
 def decompose_hangul(char):
     if not ('가' <= char <= '힣'):
@@ -35,7 +24,7 @@ def compose_syllable(cho, jung, jong=''):
 
 
 # 한글 종성 특수 문자 합성
-def combine_jong(jong1, cho2):
+def combine_jong(jong1, jong2):
     combined_jong_mapping = {
         (to_final('ㄱ'), to_final('ㅅ')): '\u11AA',  # ᆨ + ᆺ -> ᆪ (ㄳ)
         (to_final('ㄴ'), to_final('ㅈ')): '\u11AC',  # ᆫ + ᆽ -> ᆬ (ㄵ)
@@ -49,11 +38,74 @@ def combine_jong(jong1, cho2):
         (to_final('ㄹ'), to_final('ㅎ')): '\u11B6',  # ᆯ + ᇂ -> ᆶ (ㅀ)
         (to_final('ㅂ'), to_final('ㅅ')): '\u11B9',  # ᆸ + ᆺ -> ᆹ (ㅄ)
     }
-    return combined_jong_mapping.get((jong1, cho2), None)
+    return combined_jong_mapping.get((jong1, jong2), None)
+
+
+def to_independent(cho):
+    to_independent_mapping = {
+        # 독립
+        '\u3131': '\u3131',  # ㄱ -> ㄱ
+        '\u3132': '\u3132',  # ㄲ -> ㄲ
+        '\u3134': '\u3134',  # ㄴ -> ㄴ
+        '\u3137': '\u3137',  # ㄷ -> ㄷ
+        '\u3138': '\u3138',  # ㄸ -> ㄸ
+        '\u3139': '\u3139',  # ㄹ -> ㄹ
+        '\u3141': '\u3141',  # ㅁ -> ㅁ
+        '\u3142': '\u3142',  # ㅂ -> ㅂ
+        '\u3143': '\u3143',  # ㅃ -> ㅃ
+        '\u3145': '\u3145',  # ㅅ -> ㅅ
+        '\u3146': '\u3146',  # ㅆ -> ㅆ
+        '\u3147': '\u3147',  # ㅇ -> ㅇ
+        '\u3148': '\u3148',  # ㅈ -> ㅈ
+        '\u3149': '\u3149',  # ㅉ -> ㅉ
+        '\u314A': '\u314A',  # ㅊ -> ㅊ
+        '\u314B': '\u314B',  # ㅋ -> ㅋ
+        '\u314C': '\u314C',  # ㅌ -> ㅌ
+        '\u314D': '\u314D',  # ㅍ -> ㅍ
+        '\u314E': '\u314E',  # ㅎ -> ㅎ
+        # 초성
+        '\u1100': '\u3131',  # ᄀ -> ㄱ
+        '\u1101': '\u3132',  # ᄁ -> ㄲ
+        '\u1102': '\u3134',  # ᄂ -> ㄴ
+        '\u1103': '\u3137',  # ᄃ -> ㄷ
+        '\u1104': '\u3138',  # ᄄ -> ㄸ
+        '\u1105': '\u3139',  # ᄅ -> ㄹ
+        '\u1106': '\u3141',  # ᄆ -> ㅁ
+        '\u1107': '\u3142',  # ᄇ -> ㅂ
+        '\u1108': '\u3143',  # ᄈ -> ㅃ
+        '\u1109': '\u3145',  # ᄉ -> ㅅ
+        '\u110A': '\u3146',  # ᄊ -> ㅆ
+        '\u110B': '\u3147',  # ᄋ -> ㅇ
+        '\u110C': '\u3148',  # ᄌ -> ㅈ
+        '\u110D': '\u3149',  # ᄍ -> ㅉ
+        '\u110E': '\u314A',  # ᄎ -> ㅊ
+        '\u110F': '\u314B',  # ᄏ -> ㅋ
+        '\u1110': '\u314C',  # ᄐ -> ㅌ
+        '\u1111': '\u314D',  # ᄑ -> ㅍ
+        '\u1112': '\u314E',  # ᄒ -> ㅎ
+        # 종성
+        '\u11A8': '\u3131',  # ᆨ -> ㄱ
+        '\u11A9': '\u3132',  # ᆩ -> ㄲ
+        '\u11AB': '\u3134',  # ᆫ -> ㄴ
+        '\u11AE': '\u3137',  # ᆮ -> ㄷ
+        '\u11AF': '\u3139',  # ᆯ -> ㄹ
+        '\u11B7': '\u3141',  # ᆷ -> ㅁ
+        '\u11B8': '\u3142',  # ᆸ -> ㅂ
+        '\u11BA': '\u3145',  # ᆺ -> ㅅ
+        '\u11BB': '\u3146',  # ᆻ -> ㅆ
+        '\u11BC': '\u3147',  # ᆼ -> ㅇ
+        '\u11BD': '\u3148',  # ᆽ -> ㅈ
+        '\u11BE': '\u314A',  # ᆾ -> ㅊ
+        '\u11BF': '\u314B',  # ᆿ -> ㅋ
+        '\u11C0': '\u314C',  # ᇀ -> ㅌ
+        '\u11C1': '\u314D',  # ᇁ -> ㅍ
+        '\u11C2': '\u314E',  # ᇂ -> ㅎ
+    }
+    return to_independent_mapping.get(cho, cho)
 
 # 독립 및 초성 문자를 종성 문자로 변환
-def to_final(choseong):
-    initial_to_final_mapping = {
+def to_final(cho):
+    to_final_mapping = {
         # 독립
         '\u3131': '\u11A8',  # ᄀ -> ᆨ (ㄱ)
         '\u3132': '\u11A9',  # ᄁ -> ᆩ (ㄲ)
@@ -88,8 +140,26 @@ def to_final(choseong):
         '\u1110': '\u11C0',  # ᄐ -> ᇀ (ㅌ)
         '\u1111': '\u11C1',  # ᄑ -> ᇁ (ㅍ)
         '\u1112': '\u11C2',  # ᄒ -> ᇂ (ㅎ)
+        # 종성
+        '\u11A8': '\u11A8',  # ᄀ -> ᆨ (ㄱ)
+        '\u11A9': '\u11A9',  # ᄁ -> ᆩ (ㄲ)
+        '\u11AB': '\u11AB',  # ᄂ -> ᆫ (ㄴ)
+        '\u11AE': '\u11AE',  # ᄃ -> ᆮ (ㄷ)
+        '\u11AF': '\u11AF',  # ᄅ -> ᆯ (ㄹ)
+        '\u11B7': '\u11B7',  # ᄆ -> ᆷ (ㅁ)
+        '\u11B8': '\u11B8',  # ᄇ -> ᆸ (ㅂ)
+        '\u11BA': '\u11BA',  # ᄉ -> ᆺ (ㅅ)
+        '\u11BB': '\u11BB',  # ᄊ -> ᆻ (ㅆ)
+        '\u11BC': '\u11BC',  # ᄋ -> ᆼ (ㅇ)
+        '\u11BD': '\u11BD',  # ᄌ -> ᆽ (ㅈ)
+        '\u11BE': '\u11BE',  # ᄎ -> ᆾ (ㅊ)
+        '\u11BF': '\u11BF',  # ᄏ -> ᆿ (ㅋ)
+        '\u11C0': '\u11C0',  # ᄐ -> ᇀ (ㅌ)
+        '\u11C1': '\u11C1',  # ᄑ -> ᇁ (ㅍ)
+        '\u11C2': '\u11C2',  # ᄒ -> ᇂ (ㅎ)
     }
-    return initial_to_final_mapping.get(choseong, None)
+    return to_final_mapping.get(cho, None)
+
 
 
 # 검색 키워드 생성
@@ -108,7 +178,7 @@ def generate_search_keywords(word):
             cho, jung, jong = decomposition
 
             # 초성 추가
-            buffer_initial = buffer + cho
+            buffer_initial = buffer + to_independent(cho)
             if buffer_initial not in keywords:
                 keywords.append(buffer_initial)
 
@@ -164,73 +234,3 @@ def generate_search_keywords(word):
             keywords.append(buffer2)
             idx2 += 1
     return keywords
-
-
-# 테스트 실행
-words = ["랍스터", "복숭아", "머리", "고장난 냉장고", "할아버지"]
-for word_ in words:
-    print(f"{word_}: {generate_search_keywords(word_)}")
-"""
-
-
-"""
-class TestScreen(screen.Screen): # 가전
-    def __init__(self, root):
-        self.root = root
-        self.appbar = widget.AppBar(root, title="테스트 스크린", action=None)
-        self.button1 = tkinter.Button(
-            root,
-            text = "버튼 1",
-            padx=40, pady=20,
-            background=theme.color_background,
-            fg=theme.color_on_background,
-            borderwidth=1,
-            font=theme.font(size=40),
-            command=self.button1
-        )
-        self.button2 = tkinter.Button(
-            root,
-            text = "버튼 2",
-            padx=40, pady=20,
-            background=theme.color_background,
-            fg=theme.color_on_background,
-            borderwidth=1,
-            font=theme.font(size=40),
-            command=self.button2
-        )
-
-    def button1(self):
-        controller.change_screen(end_screen.EndScreen(self.root, title="테스트 엔드 스크린", content="테스트 엔드 스크린 내용 입니다. " * 100))
-
-    def button2(self):
-        pass
-
-    def show(self):
-        self.appbar.place()
-        self.button1.place(
-            x=40, y=120+40,
-            width=640, height=120
-        )
-        self.button2.place(
-            x=40, y=120+40+160,
-            width=640, height=120
-        )
-
-    def hide(self):
-        self.appbar.place_forget()
-        self.button1.place_forget()
-        self.button2.place_forget()
-
-
-test_window = tkinter.Tk()
-
-test_window.geometry("720x1080")
-test_window.title("테스트 윈도우")
-test_window.resizable(False, False)
-test_window.config(background=theme.color_background)
-pyglet.font.add_file("res/NanumSquareNeo.ttf")
-controller.init(test_window)
-controller.change_screen(TestScreen(test_window))
-
-test_window.mainloop()
-"""

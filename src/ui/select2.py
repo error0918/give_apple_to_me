@@ -1,12 +1,8 @@
 import tkinter
 import platform
-from . import controller
-from . import navigator
-from . import screen
-from . import select1
-from . import theme
-from . import widget
 from typing import Union
+from . import widget, select1
+from util import theme, screen, controller, navigator
 
 
 class Select2(screen.Screen): # 가전

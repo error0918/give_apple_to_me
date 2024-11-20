@@ -1,9 +1,8 @@
 import threading
 import tkinter
 import time
-from . import theme
-from . import controller
 from . import splash
+from util import theme, controller
 
 
 class MyButton:
@@ -13,8 +12,8 @@ class MyButton:
             on_click,
             text: str,
             subtext: str=None,
-            background: str=theme.color_button1,
-            foreground: str=theme.color_on_button1,
+            background: str= theme.color_button1,
+            foreground: str= theme.color_on_button1,
     ):
         self.frame = tkinter.Frame(
             root,

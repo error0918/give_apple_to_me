@@ -1,9 +1,7 @@
 import tkinter
-from ui import controller
-from ui import screen
 from ui import select1
 from ui import widget
-from ui import theme
+from util import theme, screen, controller
 
 
 class GompangiScreen(screen.Screen): # 음식물
