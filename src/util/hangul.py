@@ -233,4 +233,10 @@ def generate_search_keywords(word):
             buffer2 = buffer2 + cho
             keywords.append(buffer2)
             idx2 += 1
+
+    # 글자 부분 부분 키워드
+    for i in range(len(word)):
+        for j in range(i + 1, len(word) + 1):
+            substr = word[i:j]
+            keywords.append(substr)
     return keywords

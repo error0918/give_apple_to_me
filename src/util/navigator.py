@@ -21,6 +21,7 @@ class SubDivision(Enum):
     NUCLEAR_FRUIT = ("핵과류", Division.FOOD)
     FRUITS = ("과일", Division.FOOD)
     CRUSTACEANS = ("갑각류", Division.FOOD)
+    SEAFOOD = ("어패류", Division.FOOD)
 
 
 # 연결 페이지
@@ -192,16 +193,119 @@ class TrashItem:
     go_page: GoPage  # 연결 페이지
     @property
     def search_keywords(self) -> list[str]:
-        print(f"{self.name} {hangul.generate_search_keywords(self.name)}")
         return hangul.generate_search_keywords(self.name)
 
 
+# 데이터셋
 dataset = [
+    # 음식물
     TrashItem(
-        name="사과 껍질",
-        divisions=[Division.FOOD, Division.LIVING],
+        name="무",
+        divisions=[SubDivision.ROOT_VEGETABLES],
         go_page=GoPage.FOOD
     ),
+    TrashItem(
+        name="고구마",
+        divisions=[SubDivision.ROOT_VEGETABLES],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="당근",
+        divisions=[SubDivision.ROOT_VEGETABLES],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="배추",
+        divisions=[SubDivision.WHOLE_VEGETABLES],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="상추",
+        divisions=[SubDivision.WHOLE_VEGETABLES],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="시금치",
+        divisions=[SubDivision.WHOLE_VEGETABLES],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="자두",
+        divisions=[SubDivision.NUCLEAR_FRUIT],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="살구",
+        divisions=[SubDivision.NUCLEAR_FRUIT],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="체리",
+        divisions=[SubDivision.NUCLEAR_FRUIT],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="복숭아",
+        divisions=[SubDivision.NUCLEAR_FRUIT],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="바나나",
+        divisions=[SubDivision.FRUITS],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="사과",
+        divisions=[SubDivision.FRUITS],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="귤",
+        divisions=[SubDivision.FRUITS],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="포도",
+        divisions=[SubDivision.FRUITS],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="딸기",
+        divisions=[SubDivision.FRUITS],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="새우",
+        divisions=[SubDivision.CRUSTACEANS],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="게",
+        divisions=[SubDivision.CRUSTACEANS],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="랍스터",
+        divisions=[SubDivision.CRUSTACEANS],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="고등어",
+        divisions=[SubDivision.SEAFOOD],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="연어",
+        divisions=[SubDivision.SEAFOOD],
+        go_page=GoPage.FOOD
+    ),
+    TrashItem(
+        name="멸치",
+        divisions=[SubDivision.SEAFOOD],
+        go_page=GoPage.FOOD
+    ),
+
+    # SAMPLES
     TrashItem(
         name="플라스틱 병",
         divisions=[Division.LIVING, Division.ETC],
@@ -251,11 +355,6 @@ dataset = [
         name="비닐봉지",
         divisions=[Division.LIVING, Division.ETC],
         go_page=GoPage.PLASTIC
-    ),
-    TrashItem(
-        name="과일 씨앗",
-        divisions=[Division.FOOD, Division.LIVING],
-        go_page=GoPage.FOOD
     ),
     TrashItem(
         name="깨진 접시",
@@ -383,11 +482,6 @@ dataset = [
         go_page=GoPage.SMALL_APPLIANCE
     ),
     TrashItem(
-        name="음식물 찌꺼기",
-        divisions=[Division.FOOD, Division.LIVING],
-        go_page=GoPage.FOOD
-    ),
-    TrashItem(
         name="부러진 의자",
         divisions=[Division.LIVING, Division.ETC],
         go_page=GoPage.DEFAULT
@@ -421,11 +515,6 @@ dataset = [
         name="플라스틱 숟가락",
         divisions=[Division.LIVING, Division.ETC],
         go_page=GoPage.PLASTIC
-    ),
-    TrashItem(
-        name="과일 껍질",
-        divisions=[Division.FOOD, Division.LIVING],
-        go_page=GoPage.FOOD
     ),
     TrashItem(
         name="고장난 마우스",
