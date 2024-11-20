@@ -6,16 +6,24 @@ from . import screen
 from . import select1
 from . import theme
 from . import widget
+from typing import Union
 
 
 class Select2(screen.Screen): # 가전
-    def __init__(self, root, division: navigator.Division):
+    def __init__(self, root, division: Union[navigator.Division, navigator.SubDivision]):
         self.root = root
-        self.appbar = widget.AppBar(
-            root=root,
-            title=f"대분류: {division.value}",
-            action=lambda : controller.change_screen(select1.Select1(root))
-        )
+        if division in navigator.Division:
+            self.appbar = widget.AppBar(
+                root=root,
+                title=f"대분류: {division.value}",
+                action=lambda : controller.change_screen(select1.Select1(root))
+            )
+        else:
+            self.appbar = widget.AppBar(
+                root=root,
+                title=f"소분류: {division.value[0]}",
+                action=lambda : controller.change_screen(Select2(root, division.value[1]))
+            )
 
         self.scroll_canvas = tkinter.Canvas(root, background=theme.color_background, highlightthickness=0)
         self.scroll_bar = tkinter.Scrollbar(root, orient=tkinter.VERTICAL, command=self.scroll_canvas.yview)
@@ -24,9 +32,21 @@ class Select2(screen.Screen): # 가전
         self.scroll_canvas.bind("<Configure>", lambda event: self.scroll_canvas.configure(scrollregion=self.scroll_canvas.bbox("all")))
         self.scroll_canvas.create_window((0, 0), window=self.scroll_frame, anchor="nw")
 
-        self.filtered_items = list(sorted(filter(lambda x: division in x.divisions, navigator.dataset), key=lambda x: x.name))
         self.buttons = []
-        for item in self.filtered_items:
+        if division in navigator.Division:
+            filtered_sub_division = list(sorted(filter(lambda x: x.value[1] == division, navigator.SubDivision), key=lambda x: x.value[0]))
+            for sub_division in filtered_sub_division:
+                self.buttons.append(
+                    widget.MyButton(
+                        self.scroll_frame,
+                        text = sub_division.value[0],
+                        background=theme.color_button1,
+                        foreground=theme.color_on_button1,
+                        on_click=lambda root_=self.root, division_=sub_division: controller.change_screen(Select2(root=root_, division=division_))
+                    )
+                )
+        filtered_items = list(sorted(filter(lambda x: division in x.divisions, navigator.dataset), key=lambda x: x.name))
+        for item in filtered_items:
             self.buttons.append(
                 widget.MyButton(
                     self.scroll_frame,
@@ -37,7 +57,7 @@ class Select2(screen.Screen): # 가전
                 )
             )
 
-        self.total_height = 120 * len(self.filtered_items) + 40 * (len(self.filtered_items) + 1)
+        self.total_height = 120 * len(self.buttons) + 40 * (len(self.buttons) + 1)
 
         self.scroll_frame.configure(height=self.total_height, width=720-30)
         if platform.system() == "Windows":  # Windows 일 때

@@ -8,8 +8,8 @@ from typing import Union
 
 # 쓰레기 대분류
 class Division(Enum):
-    ELECTRIC = "전자제품"
     FOOD = "음식물"
+    ELECTRIC = "전자제품"
     LIVING = "생활 쓰레기"
     ETC = "기타"
 

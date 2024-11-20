@@ -35,7 +35,7 @@ class Select1(screen.Screen):
             cursor="hand2",
             background=theme.color_secondary,
             foreground=theme.color_hint,
-            font=theme.font(size=30, italic=True),
+            font=theme.font(size=30),
             anchor="w"
         )
         self.search_clear = tkinter.Label(
@@ -93,7 +93,7 @@ class Select1(screen.Screen):
             )
 
 
-    def on_text_changed(self, *args):
+    def on_text_changed(self, *__args):
         value = self.search_variable.get().strip()
         if value == "":
             # SearchBar 수정
@@ -134,7 +134,8 @@ class Select1(screen.Screen):
 
             # 버튼 수정
             self.hide_buttons()
-            filtered_items = list(sorted(filter(lambda x: value in x.search_keywords, navigator.dataset), key=lambda x: x.name))
+            filtered_items = list(sorted(filter(lambda x: value.replace(" ", "") in x.search_keywords, navigator.dataset), key=lambda x: x.name))
+
             self.buttons = []
             for item in filtered_items:
                 self.buttons.append(
