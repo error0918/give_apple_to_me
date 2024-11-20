@@ -18,6 +18,7 @@ color_container = "#19814B"
 color_on_container = "#FFFFFF"
 color_button1 = "#EEEEEE"
 color_on_button1 = "#000000"
+color_sub_on_button1 = "#AAAAAA"
 color_button2 = "#FFFFFF"
 color_on_button2 = "#000000"
 

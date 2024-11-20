@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import Union
-from ui.last_screen import end_screen, gompangi_screen
+from ui import select1, widget
+from ui.last_screen import end_screen, ask_screen
 from util import hangul, controller
 
 
@@ -183,7 +184,22 @@ def nav_big_appliance(root, name: str):
 
 # 곰팡이가 피었나요?
 def nav_gompangi(root, name: str):
-    controller.change_screen(gompangi_screen.GompangiScreen(root, name))
+    def command_no():
+        widget.toast(root, text="TODO")
+        # TODO
+    def command_yes():
+        widget.toast(root, text="상하거나 곰팡이가 핀 쓰레기는 일반 쓰레기로 분류됩니다.")
+        nav_default(root, name=name)
+    controller.change_screen(
+        ask_screen.AskScreen(
+            root,
+            title="음식물 확인",
+            content="잠깐! 곰팡이가 피었나요?",
+            command_no=command_no,
+            command_yes=command_yes,
+            command_back=lambda : controller.change_screen(select1.Select1(root))
+        )
+    )
 
 
 @dataclass
@@ -247,7 +263,7 @@ dataset = [
     TrashItem(
         name="복숭아",
         divisions=[SubDivision.NUCLEAR_FRUIT],
-        go_page=GoPage.FOOD
+        go_page=GoPage.GOMPANGI
     ),
     TrashItem(
         name="바나나",
