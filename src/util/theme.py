@@ -1,4 +1,4 @@
-import pyglet
+import platform
 import tkinter.font
 
 
@@ -13,12 +13,13 @@ color_primary = "#4BC687"
 color_secondary = "#79CBA0"
 color_on_content = "#FFFFFF"
 color_hint = "#DDDDDD"
+color_point = "#990D19"  # Easter Egg: Boogie Man Red
+color_sub = "#AAAAAA"
 
 color_container = "#19814B"
 color_on_container = "#FFFFFF"
 color_button1 = "#EEEEEE"
 color_on_button1 = "#000000"
-color_sub_on_button1 = "#AAAAAA"
 color_button2 = "#FFFFFF"
 color_on_button2 = "#000000"
 
@@ -31,8 +32,10 @@ def font(
         underline: bool = False,
         overstrike: bool = False
 ):
+    if platform.system() == "Windows":
+        size = int(size * 0.8)
     return tkinter.font.Font(
-        family=pyglet.font.load("NanumSquare Neo").name,
+        family="Arial",
         size=size,
         weight="bold" if bold else "normal",
         slant="italic" if italic else "roman",

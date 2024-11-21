@@ -14,7 +14,6 @@ class AskScreen(screen.Screen): # 음식물
             command_back: Optional[Callable[[], None]] = None,
             text_no: str = "아니요",
             text_yes: str = "예",
-            font_size: int=45,
             centered: bool=True,
             text_edit: Optional[Callable[[tkinter.Text], None]]=None
     ):
@@ -32,18 +31,22 @@ class AskScreen(screen.Screen): # 음식물
             wrap="word",
             borderwidth=0,
             highlightthickness=0,
-            font=theme.font(size=font_size, bold=True)
+            font=theme.font(size=45 if centered else 35, bold=True)
         )
+        self.content_text.tag_configure("left", justify='left')
         self.content_text.tag_configure("center", justify='center')
+        self.content_text.tag_configure("right", justify='right')
         if content:
             if centered:
                 self.content_text.insert(
                     "1.0",
-                    "\n" * (280 // int(font_size * 0.8) - len(content) // font_size)
+                    "\n" * (280 // int(45 * 0.8) - len(content) // 45)
                 )
                 self.content_text.insert(tkinter.END, content, "center")
             else:
+                self.content_text.tag_configure("line_spacing", spacing2=15)
                 self.content_text.insert(tkinter.END, content)
+                self.content_text.tag_add("line_spacing", "1.0", "end")
             self.content_text.configure(state=tkinter.DISABLED)
         if text_edit:
             text_edit(self.content_text)

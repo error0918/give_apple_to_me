@@ -14,7 +14,7 @@ class MyButton:
             subtext: str=None,
             background: str= theme.color_button1,
             foreground: str= theme.color_on_button1,
-            sub_foreground: str=theme.color_sub_on_button1,
+            sub_foreground: str=theme.color_sub,
             has_border: bool=True
     ):
         self.frame = tkinter.Frame(

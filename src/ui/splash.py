@@ -40,7 +40,7 @@ class Splash(screen.Screen):
         self.root.configure(background=theme.color_primary)
         self.title.place(x=0, y=540-100, width=720, height=200)
         self.start_button.place(x=360-120, y=700, width=240, height=120)
-        self.description.place(x=360-120, y=1040, width=240, height=30)
+        self.description.place(x=0, y=1040, width=720, height=30)
         self.deco1.place(x=0, y=0, width=360, height=360)
         self.deco2.place(x=530, y=240, width=180, height=180)
 

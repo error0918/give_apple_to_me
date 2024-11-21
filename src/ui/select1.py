@@ -68,7 +68,6 @@ class Select1(screen.Screen):
                 widget.MyButton(
                     self.scroll_frame,
                     text=division.value,
-                    subtext="대분류",
                     background=theme.color_button1,
                     foreground=theme.color_on_button1,
                     on_click=lambda root_=self.root, division_=division: controller.change_screen(select2.Select2(root=root_, division=division_))
@@ -107,7 +106,6 @@ class Select1(screen.Screen):
                     widget.MyButton(
                         self.scroll_frame,
                         text=division.value,
-                        subtext="대분류",
                         background=theme.color_button1,
                         foreground=theme.color_on_button1,
                         on_click=lambda root_=self.root, division_=division: controller.change_screen(select2.Select2(root=root_, division=division_))

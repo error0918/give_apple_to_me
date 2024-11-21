@@ -24,12 +24,17 @@ class EndScreen(screen.Screen): # 생활 쓰레기
             wrap="word",
             borderwidth=0,
             highlightthickness=0,
-            font=theme.font(size=25)
+            font=theme.font(size=35)
         )
+        self.content_text.tag_configure("left", justify='left')
+        self.content_text.tag_configure("center", justify='center')
+        self.content_text.tag_configure("right", justify='right')
+        self.content_text.tag_configure("line_spacing", spacing2=15)
         if content:
             self.content_text.insert("1.0", content)
         if text_edit:
             text_edit(self.content_text)
+        self.content_text.tag_add("line_spacing", "1.0", "end")
         self.content_text.configure(state=tkinter.DISABLED)
 
         self.restart_bar = widget.RestartBar(root)

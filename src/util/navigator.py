@@ -1,9 +1,10 @@
+import tkinter
 from dataclasses import dataclass
 from enum import Enum
 from typing import Union
 from ui import select1, widget
 from ui.last_screen import end_screen, ask_screen
-from util import hangul, controller
+from util import hangul, controller, theme
 
 
 # 쓰레기 대분류
@@ -19,7 +20,6 @@ class SubDivision(Enum):
     # 소분류 = (소분류 이름, 소속 대분류)
     ROOT_VEGETABLES = ("뿌리채소", Division.FOOD)
     WHOLE_VEGETABLES = ("통채소", Division.FOOD)
-    NUCLEAR_FRUIT = ("핵과류", Division.FOOD)
     FRUITS = ("과일", Division.FOOD)
     CRUSTACEANS = ("갑각류", Division.FOOD)
     SEAFOOD = ("어패류", Division.FOOD)
@@ -43,21 +43,41 @@ class GoPage(Enum):
 
 # 일반 쓰레기
 def nav_default(root, name: str):
+    def text_edit(text: tkinter.Text):
+        text.tag_configure(
+            tagName="highlight",
+            foreground=theme.color_point,
+            font=theme.font(size=35, bold=True)
+        )
+        text.insert("1.0", " 일반 쓰레기는 환경을 지키기 위한 마지막 책임입니다.\n\n")
+        text.insert(tkinter.END, " 재활용이 불가능한 쓰레기만 담아 일반쓰레기 봉투에 넣고, 쓰레기 배출일에 맞춰 배출해 주세요.\n\n", "highlight")
+        text.insert(tkinter.END, " 작은 습관이 모여 큰 변화를 만듭니다.")
     controller.change_screen(
         end_screen.EndScreen(
             root,
             title="일반 쓰레기",
-            content=f"일반 쓰레기에 대한 설명입니다. 또한 여기에 {name}에 대한 설명도 들어갈 것입니다." * 10
+            content=None,
+            text_edit=text_edit
         )
     )
 
 # 음식물 쓰레기
 def nav_food(root, name: str):
+    def text_edit(text: tkinter.Text):
+        text.tag_configure(
+            tagName="highlight",
+            foreground=theme.color_point,
+            font=theme.font(size=35, bold=True)
+        )
+        text.insert("1.0", " 음식물 쓰레기는 자연의 순환을 위한 소중한 자원입니다.\n\n")
+        text.insert(tkinter.END, " 물기를 최대한 제거하고, 이물질을 골라낸 후 음식물 쓰레기 전용 봉투에 담아 지정된 장소에 배출해 주세요. ", "highlight")
+        text.insert(tkinter.END, "올바른 분리배출이 지구를 건강하게 만듭니다.")
     controller.change_screen(
         end_screen.EndScreen(
             root,
             title="음식물 쓰레기",
-            content=f"음식물 쓰레기에 대한 설명입니다. 또한 여기에 {name}에 대한 설명도 들어갈 것입니다." * 10
+            content=None,
+            text_edit=text_edit
         )
     )
 
@@ -246,49 +266,44 @@ dataset = [
         go_page=GoPage.FOOD
     ),
     TrashItem(
-        name="자두",
-        divisions=[SubDivision.NUCLEAR_FRUIT],
-        go_page=GoPage.FOOD
-    ),
-    TrashItem(
-        name="살구",
-        divisions=[SubDivision.NUCLEAR_FRUIT],
-        go_page=GoPage.FOOD
-    ),
-    TrashItem(
-        name="체리",
-        divisions=[SubDivision.NUCLEAR_FRUIT],
-        go_page=GoPage.FOOD
-    ),
-    TrashItem(
-        name="복숭아",
-        divisions=[SubDivision.NUCLEAR_FRUIT],
-        go_page=GoPage.GOMPANGI
+        name="과일 씨앗",
+        divisions=[SubDivision.FRUITS],
+        go_page=GoPage.DEFAULT
     ),
     TrashItem(
         name="바나나",
         divisions=[SubDivision.FRUITS],
-        go_page=GoPage.FOOD
+        go_page=GoPage.GOMPANGI
     ),
     TrashItem(
         name="사과",
         divisions=[SubDivision.FRUITS],
-        go_page=GoPage.FOOD
+        go_page=GoPage.GOMPANGI
     ),
     TrashItem(
         name="귤",
         divisions=[SubDivision.FRUITS],
-        go_page=GoPage.FOOD
+        go_page=GoPage.GOMPANGI
     ),
     TrashItem(
         name="포도",
         divisions=[SubDivision.FRUITS],
-        go_page=GoPage.FOOD
+        go_page=GoPage.GOMPANGI
     ),
     TrashItem(
         name="딸기",
         divisions=[SubDivision.FRUITS],
-        go_page=GoPage.FOOD
+        go_page=GoPage.GOMPANGI
+    ),
+    TrashItem(
+        name="참외",
+        divisions=[SubDivision.FRUITS],
+        go_page=GoPage.GOMPANGI
+    ),
+    TrashItem(
+        name="키위",
+        divisions=[SubDivision.FRUITS],
+        go_page=GoPage.GOMPANGI
     ),
     TrashItem(
         name="새우",
