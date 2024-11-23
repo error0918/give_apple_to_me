@@ -30,7 +30,7 @@ class Select2(screen.Screen): # 가전
 
         self.buttons = []
         if division in navigator.Division:
-            filtered_sub_division = list(sorted(filter(lambda x: x.value[1] == division, navigator.SubDivision), key=lambda x: x.value[0]))
+            filtered_sub_division = list(filter(lambda x: x.value[1] == division, navigator.SubDivision))
             for sub_division in filtered_sub_division:
                 self.buttons.append(
                     widget.MyButton(

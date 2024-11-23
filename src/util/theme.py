@@ -34,11 +34,19 @@ def font(
 ):
     if platform.system() == "Windows":
         size = int(size * 0.8)
-    return tkinter.font.Font(
-        family="Arial",
-        size=size,
-        weight="bold" if bold else "normal",
-        slant="italic" if italic else "roman",
-        underline=underline,
-        overstrike=overstrike,
-    )
+    if bold:
+        return tkinter.font.Font(
+            family="이사만루체 Medium" if platform.system() == "Windows" else "esamanru",
+            size=size,
+            slant="italic" if italic else "roman",
+            underline=underline,
+            overstrike=overstrike,
+        )
+    else:
+        return tkinter.font.Font(
+            family="Pretendard",
+            size=size,
+            slant="italic" if italic else "roman",
+            underline=underline,
+            overstrike=overstrike,
+        )

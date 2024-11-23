@@ -1,93 +1,75 @@
 import tkinter
+import platform
 from ui import widget
 from ui.last_screen import end_screen, ask_screen, electric_screen
-from util import theme, screen, controller
+from util import theme, screen, controller, navigator
 
 
 class TestScreen(screen.Screen): # 가전
     def __init__(self, root):
         self.root = root
         self.appbar = widget.AppBar(root, title="테스트 스크린", action=None)
-        self.button1 = widget.MyButton(
-            root,
-            on_click=self.button1,
-            text="버튼 1",
-            subtext="TODO"
-        )
-        self.button2 = widget.MyButton(
-            root,
-            on_click=self.button2,
-            text="버튼 2",
-            subtext="애스크 스크린"
-        )
-        self.button3 = widget.MyButton(
-            root,
-            on_click=self.button3,
-            text="버튼 3",
-            subtext="문구 스크린"
-        )
 
-    def button1(self):
-        controller.change_screen(
-            electric_screen.ElectricScreen(
-                self.root,
-                depot_type=electric_screen.DepotType.PHONE
-            )
-        )
+        self.scroll_canvas = tkinter.Canvas(root, background=theme.color_background, highlightthickness=0)
+        self.scroll_bar = tkinter.Scrollbar(root, orient=tkinter.VERTICAL, command=self.scroll_canvas.yview)
+        self.scroll_frame = tkinter.Frame(self.scroll_canvas, background=theme.color_background)
+        self.scroll_canvas.configure(yscrollcommand=self.scroll_bar.set)
+        self.scroll_canvas.bind("<Configure>", lambda event: self.scroll_canvas.configure(scrollregion=self.scroll_canvas.bbox("all")))
+        self.scroll_canvas.create_window((0, 0), window=self.scroll_frame, anchor="nw")
 
-    def button2(self):
-        controller.change_screen(
-            ask_screen.AskScreen(
-                self.root,
-                title="테스트 애스크 스크린",
-                content="테스트 애스크 스크린 내용 입니다." * 5,
-                command_no=lambda : print("TEST1"),
-                command_yes=lambda : print("TEST1")
+        self.na = [navigator.GoPage.DEFAULT, navigator.GoPage.FOOD, navigator.GoPage.NUCLEARSEED, navigator.GoPage.PINE, navigator.GoPage.BONE, navigator.GoPage.ROOT, navigator.GoPage.PAPER, navigator.GoPage.GLASS, navigator.GoPage.METAL, navigator.GoPage.BATTERY, navigator.GoPage.LIGHT, navigator.GoPage.APPLIANCE, navigator.GoPage.PHONE, navigator.GoPage.GOMPANGI]
+        self.na2 = ["navigator.GoPage.DEFAULT", "navigator.GoPage.FOOD", "navigator.GoPage.NUCLEARSEED", "navigator.GoPage.PINE", "navigator.GoPage.BONE", "navigator.GoPage.ROOT", "navigator.GoPage.PAPER", "navigator.GoPage.GLASS", "navigator.GoPage.METAL", "navigator.GoPage.BATTERY", "navigator.GoPage.LIGHT", "navigator.GoPage.APPLIANCE", "navigator.GoPage.PHONE", "navigator.GoPage.GOMPANGI"]
+        self.buttons = []
+        for i in range(len(self.na)):
+            self.buttons.append(
+                widget.MyButton(
+                    self.scroll_frame,
+                    text=self.na2[i],
+                    background=theme.color_button1,
+                    foreground=theme.color_on_button1,
+                    on_click=lambda i_=i: self.na[i_](root, "")
+                )
             )
-        )
+        self.total_height = 120 * len(self.na) + 40 * (len(self.na) + 1)
 
-    def button3(self):
-        def text_edit(text: tkinter.Text):
-            text.tag_configure(
-                tagName="highlight",
-                foreground=theme.color_point,
-                font=theme.font(size=35, bold=True)
+        self.scroll_frame.configure(height=self.total_height, width=720-30)
+        if platform.system() == "Windows":  # Windows 일 때
+            self.scroll_frame.bind_all(
+                "<MouseWheel>",
+                lambda event: self.scroll_canvas.yview_scroll(-1 * event.delta // 120, "units")
             )
-            # self.a = tkinter.PhotoImage(file="res/test.png").subsample(3, 3)
-            # text.image_create("1.0", image=self.a)
-            # text.insert(tkinter.END, "\n\n")
-            text.insert(tkinter.END, "음식물 쓰레기는 자연의 순환을 위한 소중한 자원입니다.\n\n")
-            text.insert(tkinter.END, "물기를 최대한 제거하고, 이물질을 골라낸 후 음식물 쓰레기 전용 봉투에 담아 지정된 장소에 배출해 주세요. ", "highlight")
-            text.insert(tkinter.END, "올바른 분리배출이 지구를 건강하게 만듭니다.")
-        controller.change_screen(
-            end_screen.EndScreen(
-                self.root,
-                title="음식물 쓰레기",
-                content=None,
-                text_edit=text_edit
+        else:  # macOS 일 떄
+            self.scroll_frame.bind_all(
+                "<MouseWheel>",
+                lambda event: self.scroll_canvas.yview_scroll(-1 * event.delta, "units")
             )
-        )
+
 
     def show(self):
         self.appbar.place()
-        self.button1.place(
-            x=40, y=120+40,
-            width=640, height=120
+
+        self.scroll_canvas.place(
+            x=0, y=120,
+            width=720-30, height=1080-120
         )
-        self.button2.place(
-            x=40, y=120+40+160,
-            width=640, height=120
+        self.scroll_bar.place(
+            x=720-30, y=120,
+            width=30, height=1080-120
         )
-        self.button3.place(
-            x=40, y=(120+40)*2+160,
-            width=640, height=120
-        )
+        for i in range(0, len(self.buttons)):
+            self.buttons[i].place(
+                x=40, y=40+(120+40)*i,
+                width=720-40*2-30, height=120
+            )
+
 
     def hide(self):
         self.appbar.place_forget()
-        self.button1.place_forget()
-        self.button2.place_forget()
-        self.button3.place_forget()
+
+        self.scroll_canvas.place_forget()
+        self.scroll_bar.place_forget()
+        for button in self.buttons:
+            button.place_forget()
 
 
 test_window = tkinter.Tk()

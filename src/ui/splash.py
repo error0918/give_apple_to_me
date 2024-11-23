@@ -8,14 +8,14 @@ class Splash(screen.Screen):
         self.root = root
         self.title = tkinter.Label(
             root,
-            text = "사과해요나한테",
+            text="일반분리학",
             background=theme.color_primary,
             fg=theme.color_on_content,
-            font=theme.font(size=80, bold=True)
+            font=theme.font(size=100, bold=True)
         )
         self.start_button = tkinter.Label(
             root,
-            text = "시작하기",
+            text="시작하기",
             background=theme.color_button1,
             foreground=theme.color_on_button1,
             font=theme.font(size=40),
@@ -39,7 +39,7 @@ class Splash(screen.Screen):
     def show(self):
         self.root.configure(background=theme.color_primary)
         self.title.place(x=0, y=540-100, width=720, height=200)
-        self.start_button.place(x=360-120, y=700, width=240, height=120)
+        self.start_button.place(x=360-120, y=720, width=240, height=120)
         self.description.place(x=0, y=1040, width=720, height=30)
         self.deco1.place(x=0, y=0, width=360, height=360)
         self.deco2.place(x=530, y=240, width=180, height=180)

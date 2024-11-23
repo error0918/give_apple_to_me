@@ -128,7 +128,13 @@ class Select1(screen.Screen):
 
             # 버튼 수정
             self.hide_buttons()
-            filtered_items = list(sorted(filter(lambda x: value.replace(" ", "") in x.search_keywords, navigator.dataset), key=lambda x: x.name))
+            filtered_items = list(
+                sorted(
+                    filter(
+                        lambda x: value.replace(" ", "") in x.search_keywords, navigator.dataset
+                    ), key=lambda x: x.name
+                )
+            )
 
             self.buttons = []
             for item in filtered_items:

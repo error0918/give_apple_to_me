@@ -232,7 +232,7 @@ def generate_search_keywords(word):
             cho = decomposition[0]
             buffer2 = buffer2 + cho
             keywords.append(buffer2)
-            idx2 += 1
+        idx2 += 1
 
     # 글자 부분 부분 키워드
     for i in range(len(word)):
