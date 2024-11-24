@@ -2,7 +2,7 @@ import tkinter
 import platform
 from ui import widget
 from ui.last_screen import end_screen, ask_screen, electric_screen
-from util import theme, screen, controller, navigator
+from util import theme, screen, controller, navigator, hangul
 
 
 class TestScreen(screen.Screen): # 가전

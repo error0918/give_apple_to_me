@@ -229,7 +229,7 @@ def generate_search_keywords(word):
         char = word[idx2]
         decomposition = decompose_hangul(char)
         if decomposition:
-            cho = decomposition[0]
+            cho = to_independent(decomposition[0])
             buffer2 = buffer2 + cho
             keywords.append(buffer2)
         idx2 += 1
